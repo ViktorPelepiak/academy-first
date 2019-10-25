@@ -1,13 +1,17 @@
+import collection.Schedule;
 import exception.GeneralValidationException;
+import io.JSONConverter;
 import model.Teacher;
 import validation.Validator;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-//        Schedule schedule = new Schedule();
-//
+        Schedule schedule = new Schedule();
+
 //        Teacher teacher1 = new Teacher()
 //                .setLastName("Filipchuk")
 //                .setFirstName("Mykola")
@@ -81,17 +85,17 @@ public class Main {
 //            e.printStackTrace();
 //        }
 
-//        try {
-//            System.out.println("try open file");
-//            schedule = JSONConverter.deserialize("ScheduleInTest.json");
-//
-//            System.out.println("try print data");
-//            System.out.println(schedule.getSchedule());
-//
-//            System.out.println("program finish");
-//        } catch (IOException | JAXBException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            System.out.println("try open file");
+            schedule = JSONConverter.deserialize("ScheduleInTest.json");
+
+            System.out.println("try print data");
+            System.out.println(schedule.getSchedule());
+
+            System.out.println("program finish");
+        } catch (IOException | JAXBException e) {
+            e.printStackTrace();
+        }
 
         Teacher teacher1 = new Teacher()
                 .setLastName(null)
