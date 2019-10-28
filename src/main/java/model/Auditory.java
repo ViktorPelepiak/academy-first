@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class Auditory {
     @Min(value = 1, message = "Building number must be greater than 0")
-    private short buildingNumber;
+    private int buildingNumber;
     @Min(value = 1, message = "Floor must be greater than 0")
-    private short floor;
+    private int floor;
     @NotNull(message = "Auditory number must be not null")
     private String auditoryNumber;
 
-    public short getBuildingNumber() {
+    public int getBuildingNumber() {
         return buildingNumber;
     }
 
-    public short getFloor() {
+    public int getFloor() {
         return floor;
     }
 
@@ -24,12 +24,12 @@ public class Auditory {
         return auditoryNumber;
     }
 
-    public Auditory setBuildingNumber(short buildingNumber) {
+    public Auditory setBuildingNumber(int buildingNumber) {
         this.buildingNumber = buildingNumber;
         return this;
     }
 
-    public Auditory setFloor(short floor) {
+    public Auditory setFloor(int floor) {
         this.floor = floor;
         return this;
     }

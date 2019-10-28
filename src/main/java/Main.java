@@ -1,114 +1,103 @@
-import collection.Schedule;
-import exception.GeneralValidationException;
 import io.JSONConverter;
-import model.Teacher;
-import validation.Validator;
+import service.Schedule;
+import enums.LessonType;
+import enums.WeekParity;
+import exception.AddLessonException;
+import model.*;
 
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static final int GROUP_QUANTITY = 5;
+    public static final int TEACHER_QUANTITY = 5;
+    public static final int SUBJECT_QUANTITY = 5;
+    public static final int AUDITORY_QUANTITY = 10;
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         Schedule schedule = new Schedule();
+        
+        List<Teacher> teachers = new LinkedList<>();
+        for (int i = 0; i < TEACHER_QUANTITY; i++) {
+            teachers.add(new Teacher()
+                    .setLastName("LN_" + i)
+                    .setFirstName("FN_" + i)
+                    .setFatherName("FthN_" + i)
+                    .setInfo("some teacher")
+                    .setDateOfBirth(LocalDate.of(1980,i+1,1))
+            );
+        }
+        
+        List<LessonTime> lessonTimes= new LinkedList<>();
+        for (int i = 0; i < 8; i++) {
+            lessonTimes.add(new LessonTime()
+                    .setLessonNumber(i)
+                    .setBeginTime(LocalTime.of(8,20))
+                    .setEndTime(LocalTime.of(9,40))
+            );
+        }
+        
+        List<Subject> subjects = new LinkedList<>();
+        for (int i = 0; i < SUBJECT_QUANTITY; i++) {
+            subjects.add(new Subject()
+                    .setName("Sub_" + i)
+            );
+        }
+        
+        List<Auditory> auditories = new LinkedList<>();
+        for (int i = 0; i < AUDITORY_QUANTITY; i++) {
+            auditories.add(new Auditory()
+                .setBuildingNumber(1)
+                .setFloor(i/5 + 1)
+                .setAuditoryNumber("" + i)
+            );
 
-//        Teacher teacher1 = new Teacher()
-//                .setLastName("Filipchuk")
-//                .setFirstName("Mykola")
-//                .setFatherName("Petrovych")
-//                .setInfo("some teacher")
-//                .setDateOfBirth(LocalDate.now());
-//        Teacher teacher2 = new Teacher()
-//                .setLastName("Bihun")
-//                .setFirstName("Yaroslav")
-//                .setFatherName("Yosypovych")
-//                .setInfo("cool teacher")
-//                .setDateOfBirth(LocalDate.now());
-//
-//        LessonTime bellFirst = new LessonTime()
-//                .setLessonNumber(1)
-//                .setBeginTime(LocalTime.of(8,20))
-//                .setEndTime(LocalTime.of(9,40));
-//
-//        Subject subject1 = new Subject()
-//                .setName("WEB-design");
-//
-//        Auditory auditory1 = new Auditory()
-//                .setBuildingNumber((short) 1)
-//                .setFloor((short) 1)
-//                .setAuditoryNumber("1");
-//        Auditory auditory2 = new Auditory()
-//                .setBuildingNumber((short) 1)
-//                .setFloor((short) 1)
-//                .setAuditoryNumber("2");
-//
-//        Group group1 = new Group()
-//                .setGroupNumber("402")
-//                .setCourse((short) 4)
-//                .setFaculty("FMI")
-//                .setSpecialisation("Applied math");
-//        Group group2 = new Group()
-//                .setGroupNumber("422")
-//                .setCourse((short) 4)
-//                .setFaculty("FMI")
-//                .setSpecialisation("Applied math(short form)");
-//
-//        Lesson couple1 = new Lesson()
-//                .setAuditory(auditory1)
-//                .setLessonTime(bellFirst)
-//                .setDayOfWeek(DayOfWeek.MONDAY)
-//                .setWeekParity(WeekParity.UNPAIR_WEEK)
-//                .setGroup(group1)
-//                .setSubject(subject1)
-//                .setTeacher(teacher1)
-//                .setType(LessonType.LECTURE);
-//        Lesson couple2 = new Lesson()
-//                .setAuditory(auditory2)
-//                .setLessonTime(bellFirst)
-//                .setDayOfWeek(DayOfWeek.MONDAY)
-//                .setWeekParity(WeekParity.PAIR_WEEK)
-//                .setGroup(group1)
-//                .setSubject(subject1)
-//                .setTeacher(teacher2)
-//                .setType(LessonType.LECTURE);
-//
-//        try {
-//            schedule.addLesson(couple1);
-//            System.out.println(schedule.teacherSchedule(teacher1));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        try {
-//            JSONConverter.serialise("ScheduleOutTest.json", schedule);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        try {
-            System.out.println("try open file");
-            schedule = JSONConverter.deserialize("ScheduleInTest.json");
-
-            System.out.println("try print data");
-            System.out.println(schedule.getSchedule());
-
-            System.out.println("program finish");
-        } catch (IOException | JAXBException e) {
-            e.printStackTrace();
         }
 
-        Teacher teacher1 = new Teacher()
-                .setLastName(null)
-                .setFirstName(null)
-                .setFatherName("Petrovych")
-                .setInfo("some teacher")
-                .setDateOfBirth(LocalDate.of(1999,1,1));
-
-        try {
-            Validator.validate(teacher1);
-        } catch (GeneralValidationException e) {
-            System.out.println(e.getValidationErrors());
+        List<Group> groups = new LinkedList<>();
+        for (int i = 0; i < GROUP_QUANTITY; i++) {
+            groups.add(new Group()
+                    .setGroupNumber("40" + i)
+                    .setCourse(4)
+                    .setFaculty("FMI")
+                    .setSpecialisation("Spec_" + i)
+            );
         }
+
+        for (int i = 0; i < GROUP_QUANTITY; i++) {
+            for (int j = 0; j < 8; j++) {
+                for (int k = 1; k < 6; k++) {
+                    try {
+                        schedule.addLesson(new Lesson()
+                                .setAuditory(auditories.get(i))
+                                .setLessonTime(lessonTimes.get(j))
+                                .setDayOfWeek(DayOfWeek.of(k))
+                                .setWeekParity(WeekParity.UNPAIR_WEEK)
+                                .setGroup(groups.get(i))
+                                .setSubject(subjects.get(i))
+                                .setTeacher(teachers.get(i))
+                                .setType(LessonType.LECTURE)
+                        );
+                    } catch (AddLessonException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        }
+
+        schedule.save("ScheduleOutTest.json");
+        System.out.println("save");
+
+        schedule.load("ScheduleInTest.json");
+        System.out.println("load");
     }
 
 }

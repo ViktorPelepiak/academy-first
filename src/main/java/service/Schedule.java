@@ -1,15 +1,22 @@
-package collection;
+package service;
 
 import enums.WeekParity;
 import exception.AddLessonException;
+import io.JSONConverter;
 import model.*;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Schedule {
@@ -90,6 +97,40 @@ public class Schedule {
             throw new AddLessonException("Can`t set current lesson, cause auditory already busy at this time");
         schedule.add(lesson);
         return this;
+    }
+
+    public void save(String path) throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> {
+            long start = System.currentTimeMillis();
+            try {
+                JSONConverter.serialise(path, this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            long finish = System.currentTimeMillis();
+            long timeConsumedMillis = finish - start;
+            System.out.println("to JSON -> " + timeConsumedMillis + "ms");
+            return timeConsumedMillis;
+        });
+        executorService.shutdown();
+    }
+
+    public void load(String path) throws ExecutionException, InterruptedException {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(()-> {
+            long start = System.currentTimeMillis();
+            try {
+//                schedule = JSONConverter.deserialize("ScheduleInTest.json");
+                this.schedule = JSONConverter.deserialize(path).schedule;
+            } catch (IOException | JAXBException e) {
+                e.printStackTrace();
+            }
+            long finish = System.currentTimeMillis();
+            long timeConsumedMillis = finish - start;
+            System.out.println("from JSON -> " + timeConsumedMillis + "ms");
+            return timeConsumedMillis;
+        });
     }
 
     @Override

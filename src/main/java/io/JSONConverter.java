@@ -1,7 +1,7 @@
 package io;
 
 import adapter.LocalTimeJSONAdapter;
-import collection.Schedule;
+import service.Schedule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,7 +14,10 @@ import java.time.LocalTime;
 
 public class JSONConverter {
     public static void serialise(String path, Schedule schedule) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(LocalTime.class, new LocalTimeJSONAdapter()).create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalTime.class, new LocalTimeJSONAdapter())
+                .create();
         File file = new File(path);
         FileWriter fw = new FileWriter(file);
         fw.write(gson.toJson(schedule));

@@ -14,7 +14,7 @@ public class Group {
     private String groupNumber;
     @Min(value = 1, message = "Course number must be for 1 to 6")
     @Max(value = 6, message = "Course number must be for 1 to 6")
-    private short course;
+    private int course;
 
     public String getFaculty() {
         return faculty;
@@ -28,7 +28,7 @@ public class Group {
         return groupNumber;
     }
 
-    public short getCourse() {
+    public int getCourse() {
         return course;
     }
 
@@ -47,7 +47,7 @@ public class Group {
         return this;
     }
 
-    public Group setCourse(short course) {
+    public Group setCourse(int course) {
         this.course = course;
         return this;
     }

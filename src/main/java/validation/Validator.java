@@ -25,5 +25,4 @@ public class Validator {
                     ).setClazz(object.getClass());
         }
     }
-
 }

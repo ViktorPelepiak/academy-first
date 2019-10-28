@@ -1,4 +1,4 @@
-package collection;
+package service;
 
 import enums.LessonType;
 import enums.WeekParity;
