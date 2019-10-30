@@ -23,11 +23,11 @@ public class Schedule {
     @NotNull(message = "Schedule must be not null")
     private List<Lesson> schedule;
 
-    public Schedule(){
+    public Schedule() {
         schedule = new LinkedList<>();
     }
 
-    public Schedule(List<Lesson> schedule){
+    public Schedule(List<Lesson> schedule) {
         this.schedule = schedule;
     }
 
@@ -47,90 +47,70 @@ public class Schedule {
                 .collect(Collectors.toList());
     }
 
-    public List<Lesson> weekDayGroupSchedule(Group group, DayOfWeek dayOfWeek){
+    public List<Lesson> weekDayGroupSchedule(Group group, DayOfWeek dayOfWeek) {
         return schedule.stream()
                 .filter(lesson -> lesson.getDayOfWeek().equals(dayOfWeek))
                 .filter(lesson -> lesson.getGroup().equals(group))
                 .collect(Collectors.toList());
     }
 
-    public List<Lesson> groupSchedule(Group group){
+    public List<Lesson> groupSchedule(Group group) {
         return schedule.stream()
                 .filter(lesson -> lesson.getGroup().equals(group))
                 .collect(Collectors.toList());
     }
 
-    public List<Lesson> teacherSchedule(Teacher teacher){
+    public List<Lesson> teacherSchedule(Teacher teacher) {
         return schedule.stream()
                 .filter(lesson -> lesson.getTeacher().equals(teacher))
                 .collect(Collectors.toList());
     }
 
-    public List<Lesson> auditorySchedule(Auditory auditory){
+    public List<Lesson> auditorySchedule(Auditory auditory) {
         return schedule.stream()
                 .filter(lesson -> lesson.getAuditory().equals(auditory))
                 .collect(Collectors.toList());
     }
 
-    public List<Lesson> subjectSchedule(Subject subject){
+    public List<Lesson> subjectSchedule(Subject subject) {
         return schedule.stream()
                 .filter(lesson -> lesson.getSubject().equals(subject))
                 .collect(Collectors.toList());
     }
 
     public Schedule addLesson(Lesson lesson) throws AddLessonException {
-        if (schedule.stream()
-                .filter(coup -> coup.getDayOfWeek().equals(lesson.getDayOfWeek()))
-                .filter(coup -> coup.getLessonTime().equals(lesson.getLessonTime()))
-                .filter(coup -> coup.getGroup().equals(lesson.getGroup()))
-                .anyMatch(coup -> coup.getWeekParity().equals(lesson.getWeekParity()) || coup.getWeekParity().equals(WeekParity.ALL_WEEKS)))
+        List<Lesson> selectByDayAndLessonTime = schedule.stream()
+                .filter(lesson1 -> lesson1.getDayOfWeek().equals(lesson.getDayOfWeek()))
+                .filter(lesson1 -> lesson1.getLessonTime().equals(lesson.getLessonTime()))
+                .collect(Collectors.toList());
+
+        if (selectByDayAndLessonTime.stream()
+                .filter(lesson1 -> lesson1.getGroup().equals(lesson.getGroup()))
+                .anyMatch(lesson1 -> lesson1.getWeekParity().equals(lesson.getWeekParity()) || lesson1.getWeekParity().equals(WeekParity.ALL_WEEKS)))
             throw new AddLessonException("Can`t set current lesson, cause group already have lesson at this time");
-        if (teacherSchedule(lesson.getTeacher()).stream()
-                .filter(coup -> coup.getDayOfWeek().equals(lesson.getDayOfWeek()))
-                .filter(coup -> coup.getLessonTime().equals(lesson.getLessonTime()))
-                .anyMatch(coup -> coup.getWeekParity().equals(lesson.getWeekParity()) || coup.getWeekParity().equals(WeekParity.ALL_WEEKS)))
+        if (selectByDayAndLessonTime.stream()
+                .filter(lesson1 -> lesson1.getTeacher().equals(lesson.getTeacher()))
+                .anyMatch(lesson1 -> lesson1.getWeekParity().equals(lesson.getWeekParity()) || lesson1.getWeekParity().equals(WeekParity.ALL_WEEKS)))
             throw new AddLessonException("Can`t set current lesson, cause teacher already have lesson at this time");
-        if (auditorySchedule(lesson.getAuditory()).stream()
-                .filter(coup -> coup.getDayOfWeek().equals(lesson.getDayOfWeek()))
-                .filter(coup -> coup.getLessonTime().equals(lesson.getLessonTime()))
-                .anyMatch(coup -> coup.getWeekParity().equals(lesson.getWeekParity()) || coup.getWeekParity().equals(WeekParity.ALL_WEEKS)))
+        if (selectByDayAndLessonTime.stream()
+                .filter(lesson1 -> lesson1.getAuditory().equals(lesson.getAuditory()))
+                .anyMatch(lesson1 -> lesson1.getWeekParity().equals(lesson.getWeekParity()) || lesson1.getWeekParity().equals(WeekParity.ALL_WEEKS)))
             throw new AddLessonException("Can`t set current lesson, cause auditory already busy at this time");
         schedule.add(lesson);
         return this;
     }
 
-    public void save(String path) throws ExecutionException, InterruptedException {
+    public void save(String path) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
-            long start = System.currentTimeMillis();
-            try {
-                JSONConverter.serialise(path, this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            long finish = System.currentTimeMillis();
-            long timeConsumedMillis = finish - start;
-            System.out.println("to JSON -> " + timeConsumedMillis + "ms");
-            return timeConsumedMillis;
+            JSONConverter.serialise(path, this);
+            return "File saved successful!;";
         });
         executorService.shutdown();
     }
 
-    public void load(String path) throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(()-> {
-            long start = System.currentTimeMillis();
-            try {
-//                schedule = JSONConverter.deserialize("ScheduleInTest.json");
-                this.schedule = JSONConverter.deserialize(path).schedule;
-            } catch (IOException | JAXBException e) {
-                e.printStackTrace();
-            }
-            long finish = System.currentTimeMillis();
-            long timeConsumedMillis = finish - start;
-            System.out.println("from JSON -> " + timeConsumedMillis + "ms");
-            return timeConsumedMillis;
-        });
+    public void load(String path) throws IOException, JAXBException {
+        this.schedule = JSONConverter.deserialize(path).schedule;
     }
 
     @Override

@@ -1,20 +1,17 @@
-import io.JSONConverter;
-import service.Schedule;
 import enums.LessonType;
 import enums.WeekParity;
 import exception.AddLessonException;
 import model.*;
+import service.Schedule;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main {
     public static final int GROUP_QUANTITY = 5;
@@ -22,7 +19,7 @@ public class Main {
     public static final int SUBJECT_QUANTITY = 5;
     public static final int AUDITORY_QUANTITY = 10;
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, IOException, JAXBException {
         Schedule schedule = new Schedule();
         
         List<Teacher> teachers = new LinkedList<>();

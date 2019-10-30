@@ -107,8 +107,6 @@ public class ScheduleTest {
     public void successAddLessonTest(){
         try {
             assertEquals(schedule.addLesson(lesson1).getSchedule().get(0),lesson1);
-            assertEquals(schedule.addLesson(lesson2).getSchedule().get(1),lesson2);
-            assertEquals(schedule.addLesson(lesson3).getSchedule().get(2),lesson3);
         } catch (Exception e) {
             e.printStackTrace();
         }
