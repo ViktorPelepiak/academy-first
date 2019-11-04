@@ -4,11 +4,21 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Subject {
+    private Long id;
     @NotNull(message = "Subject name must be not null")
     private String name;
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Subject setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public Subject setName(String name) {

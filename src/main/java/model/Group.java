@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Group {
+    private Long id;
     @NotNull(message = "Faculty must be not null")
     private String faculty;
     @NotNull(message = "Specialisation must be not null")
@@ -15,6 +16,10 @@ public class Group {
     @Min(value = 1, message = "Course number must be for 1 to 6")
     @Max(value = 6, message = "Course number must be for 1 to 6")
     private int course;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getFaculty() {
         return faculty;
@@ -30,6 +35,11 @@ public class Group {
 
     public int getCourse() {
         return course;
+    }
+
+    public Group setId(Long id){
+        this.id = id;
+        return this;
     }
 
     public Group setFaculty(String faculty) {

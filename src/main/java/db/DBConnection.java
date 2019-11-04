@@ -1,22 +1,45 @@
 package db;
 
+import org.postgresql.ds.PGConnectionPoolDataSource;
+
+import javax.sql.ConnectionPoolDataSource;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Objects;
+import java.util.Properties;
 
 public class DBConnection {
-    private static String username = "postgres";
-    private static String password = "root";
-    private static String connectionURL = "jdbc:postgresql://localhost:5432/schedule";
+    private static final String PROPERTIES = "application.properties";
+    private static ConnectionPoolDataSource poolDataSource;
 
-    private static Connection connection = null;
+    private DBConnection() { }
 
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-//        Class.forName("org.postgresql.Driver");
-        if (connection == null){
-            connection = DriverManager.getConnection(connectionURL, username, password);
+    static {
+        try {
+            reconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    private static void reconnect() throws IOException {
+        PGConnectionPoolDataSource source = new PGConnectionPoolDataSource();
+        Properties properties = new Properties();
+        properties.load(Thread.currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream(PROPERTIES));
+        source.setServerName(properties.getProperty("jdbc.server.name"));
+        source.setDatabaseName(properties.getProperty("jdbc.database.name"));
+        source.setUser(properties.getProperty("jdbc.database.username"));
+        source.setPassword(properties.getProperty("jdbc.database.password"));
+        source.setApplicationName(properties.getProperty("application.name"));
+        poolDataSource = source;
+    }
+
+    public static Connection getConnection() throws SQLException {
+        Connection connection = poolDataSource.getPooledConnection().getConnection();
+        if (Objects.isNull(connection)) throw new NullPointerException();
         return connection;
     }
 }

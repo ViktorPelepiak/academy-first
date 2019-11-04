@@ -78,7 +78,7 @@ public class Schedule {
                 .collect(Collectors.toList());
     }
 
-    public Schedule addLesson(Lesson lesson) throws AddLessonException {
+    public boolean addLesson(Lesson lesson) throws AddLessonException {
         List<Lesson> selectByDayAndLessonTime = schedule.stream()
                 .filter(lesson1 -> lesson1.getDayOfWeek().equals(lesson.getDayOfWeek()))
                 .filter(lesson1 -> lesson1.getLessonTime().equals(lesson.getLessonTime()))
@@ -96,8 +96,7 @@ public class Schedule {
                 .filter(lesson1 -> lesson1.getAuditory().equals(lesson.getAuditory()))
                 .anyMatch(lesson1 -> lesson1.getWeekParity().equals(lesson.getWeekParity()) || lesson1.getWeekParity().equals(WeekParity.ALL_WEEKS)))
             throw new AddLessonException("Can`t set current lesson, cause auditory already busy at this time");
-        schedule.add(lesson);
-        return this;
+        return schedule.add(lesson);
     }
 
     public void save(String path) {

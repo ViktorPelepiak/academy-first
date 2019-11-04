@@ -5,12 +5,17 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Auditory {
+    private Long id;
     @Min(value = 1, message = "Building number must be greater than 0")
     private int buildingNumber;
     @Min(value = 1, message = "Floor must be greater than 0")
     private int floor;
     @NotNull(message = "Auditory number must be not null")
     private String auditoryNumber;
+
+    public Long getId() {
+        return id;
+    }
 
     public int getBuildingNumber() {
         return buildingNumber;
@@ -22,6 +27,11 @@ public class Auditory {
 
     public String getAuditoryNumber() {
         return auditoryNumber;
+    }
+
+    public Auditory setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public Auditory setBuildingNumber(int buildingNumber) {
