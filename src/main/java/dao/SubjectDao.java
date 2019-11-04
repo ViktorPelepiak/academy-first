@@ -11,7 +11,7 @@ import java.util.Optional;
 public class SubjectDao implements Dao<Subject>{
     private final String GET     = "select * from public.subjects as s where s.subject_id = ?";
     private final String GET_ALL = "select * from public.subjects";
-    private final String CREATE  = "insert into schedule.public.subjects (subject_id, name) values (?, ?)";
+    private final String CREATE  = "insert into schedule.public.subjects (name) values (?)";
     private final String UPDATE  = "update schedule.public.subjects set name  = ? where subject_id = ?";
     private final String DELETE  = "delete from subjects where subject_id = ?";
 
@@ -48,8 +48,7 @@ public class SubjectDao implements Dao<Subject>{
     public void save(Subject subject) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(CREATE)) {
-            statement.setLong(1, subject.getId());
-            statement.setString(2, subject.getName());
+            statement.setString(1, subject.getName());
             statement.executeUpdate();
         }
     }

@@ -12,7 +12,7 @@ import java.util.Optional;
 public class TeacherDao implements Dao<Teacher> {
     private final String GET     = "select * from public.teachers as t where t.teacher_id = ?";
     private final String GET_ALL = "select * from public.teachers";
-    private final String SAVE    = "insert into public.teachers (teacher_id, first_name, last_name, father_name, date_of_birth, info) values (?, ?, ?, ?, ?, ?)";
+    private final String SAVE    = "insert into public.teachers (first_name, last_name, father_name, date_of_birth, info) values (?, ?, ?, ?, ?)";
     private final String UPDATE  = "update schedule.public.teachers set first_name = ?, last_name = ?, father_name = ?, date_of_birth = ?, info = ? where teacher_id = ?";
     private final String DELETE  = "delete from teachers where teacher_id = ?";
 
@@ -59,12 +59,11 @@ public class TeacherDao implements Dao<Teacher> {
     public void save(Teacher teacher) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(SAVE)) {
-            statement.setLong(1,teacher.getId());
-            statement.setString(2,teacher.getFirstName());
-            statement.setString(3,teacher.getLastName());
-            statement.setString(4,teacher.getFatherName());
-            statement.setDate(5, Date.valueOf(teacher.getDateOfBirth()));
-            statement.setString(6,teacher.getInfo());
+            statement.setString(1,teacher.getFirstName());
+            statement.setString(2,teacher.getLastName());
+            statement.setString(3,teacher.getFatherName());
+            statement.setDate(4, Date.valueOf(teacher.getDateOfBirth()));
+            statement.setString(5,teacher.getInfo());
             statement.executeUpdate();
         }
     }
