@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Teacher {
+    private Long id;
     @NotNull(message = "First name must be not null")
     private String firstName;
     @NotNull(message = "Last name must be not null")
@@ -17,6 +18,10 @@ public class Teacher {
     @ValidAge(min = 21)
     private LocalDate dateOfBirth;
     private String info;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -36,6 +41,11 @@ public class Teacher {
 
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
+    }
+
+    public Teacher setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public Teacher setFirstName(String firstName) {

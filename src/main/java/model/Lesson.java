@@ -8,6 +8,7 @@ import java.time.DayOfWeek;
 import java.util.Objects;
 
 public class Lesson {
+    private Long id;
     @NotNull(message = "Lesson time must be not null")
     private LessonTime lessonTime;
     @NotNull(message = "Group must be not null")
@@ -24,6 +25,10 @@ public class Lesson {
     private DayOfWeek dayOfWeek;
     @NotNull(message = "Subjectmust be not null")
     private Subject subject;
+
+    public Long getId() {
+        return id;
+    }
 
     public LessonTime getLessonTime() {
         return lessonTime;
@@ -55,6 +60,11 @@ public class Lesson {
 
     public Subject getSubject() {
         return subject;
+    }
+
+    public Lesson setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public Lesson setLessonTime(LessonTime lessonTime) {

@@ -18,7 +18,7 @@ public @interface ValidAge {
 
     int min() default DEFAULT_AGE;
 
-    String message() default "Age must be greater than " + DEFAULT_AGE;
+    String message() default "Age must be greater than " + DEFAULT_AGE + "yo.";
 
     Class<?>[] groups() default {};
 
