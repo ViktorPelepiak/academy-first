@@ -23,7 +23,7 @@ public class Lesson {
     private WeekParity weekParity;
     @NotNull(message = "Day of week must be not null")
     private DayOfWeek dayOfWeek;
-    @NotNull(message = "Subjectmust be not null")
+    @NotNull(message = "Subject must be not null")
     private Subject subject;
 
     public Long getId() {
@@ -126,14 +126,14 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return lessonTime.equals(lesson.lessonTime) &&
-                group.equals(lesson.group) &&
+        return Objects.equals(lessonTime, lesson.lessonTime) &&
+                Objects.equals(group, lesson.group) &&
                 type == lesson.type &&
-                teacher.equals(lesson.teacher) &&
-                auditory.equals(lesson.auditory) &&
+                Objects.equals(teacher, lesson.teacher) &&
+                Objects.equals(auditory, lesson.auditory) &&
                 weekParity == lesson.weekParity &&
                 dayOfWeek == lesson.dayOfWeek &&
-                subject.equals(lesson.subject);
+                Objects.equals(subject, lesson.subject);
     }
 
     @Override

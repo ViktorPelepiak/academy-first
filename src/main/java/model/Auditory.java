@@ -63,4 +63,14 @@ public class Auditory {
     public int hashCode() {
         return Objects.hash(buildingNumber, floor, auditoryNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Auditory{" +
+                "id=" + id +
+                ", buildingNumber=" + buildingNumber +
+                ", floor=" + floor +
+                ", auditoryNumber='" + auditoryNumber + '\'' +
+                '}';
+    }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class GroupDao implements Dao<Group> {
     private final String GET     = "select * from groups where group_id = ?";
-    private final String GET_ALL = "select * from groups;";
+    private final String GET_ALL = "select * from groups order by group_id;";
     private final String SAVE    = "insert into groups (faculty, specialisation, group_number, course) values (?, ?, ?, ?)";
     private final String UPDATE  = "update groups set faculty = ?, specialisation = ?, group_number = ?, course = ? where group_id = ?";
     private final String DELETE  = "delete from groups where group_id = ?";
@@ -23,6 +23,7 @@ public class GroupDao implements Dao<Group> {
              PreparedStatement statement = connection.prepareStatement(GET)){
             statement.setLong(1,id);
             ResultSet res = statement.executeQuery();
+            res.next();
             group = new Group()
                     .setId(res.getLong("group_id"))
                     .setFaculty(res.getString("faculty"))
@@ -52,19 +53,33 @@ public class GroupDao implements Dao<Group> {
     }
 
     @Override
-    public void save(Group group) throws SQLException {
+    public Group save(Group group) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SAVE)) {
+             PreparedStatement statement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, group.getFaculty());
             statement.setString(2,group.getSpecialisation());
             statement.setString(3, group.getGroupNumber());
             statement.setInt(4, group.getCourse());
-            statement.executeUpdate();
+            int id = statement.executeUpdate();
+
+            if (id == 0) {
+                throw new SQLException("Creating group failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    group.setId(generatedKeys.getLong(1));
+                }
+                else {
+                    throw new SQLException("Creating group failed, no ID obtained.");
+                }
+            }
         }
+        return group;
     }
 
     @Override
-    public void update(Group group) throws SQLException {
+    public Group update(Group group) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE)) {
             statement.setString(1, group.getFaculty());
@@ -74,6 +89,7 @@ public class GroupDao implements Dao<Group> {
             statement.setLong(5,group.getId());
             statement.executeUpdate();
         }
+        return group;
     }
 
     @Override

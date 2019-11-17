@@ -77,4 +77,14 @@ public class Group {
     public int hashCode() {
         return Objects.hash(faculty, specialisation, groupNumber, course);
     }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "faculty='" + faculty + '\'' +
+                ", specialisation='" + specialisation + '\'' +
+                ", groupNumber='" + groupNumber + '\'' +
+                ", course=" + course +
+                '}';
+    }
 }

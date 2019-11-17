@@ -87,6 +87,17 @@ public class Teacher {
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, fatherName, dateOfBirth, info);
+        return Objects.hash(firstName, lastName, fatherName);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fatherName='" + fatherName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", info='" + info + '\'' +
+                '}';
     }
 }
