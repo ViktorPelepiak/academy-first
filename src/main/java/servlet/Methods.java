@@ -24,6 +24,7 @@ public class Methods {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date1 = dateFormat.parse("" + date.getDayOfMonth() + "." + date.getMonthValue() + "." + date.getYear());
         Date date2 = dateFormat.parse("" + now.getDayOfMonth() + "." + now.getMonthValue() + "." + now.getYear());
+        //todo check next line
         return ((Math.abs(date1.getTime() - date2.getTime()) / 86400000) + date.getDayOfWeek().getValue() - 1) / 7;
     }
 

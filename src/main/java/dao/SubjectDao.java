@@ -11,8 +11,8 @@ import java.util.Optional;
 public class SubjectDao implements Dao<Subject> {
     private final String GET     = "select * from public.subjects as s where s.subject_id = ?";
     private final String GET_ALL = "select * from public.subjects";
-    private final String CREATE  = "insert into schedule.public.subjects (name) values (?)";
-    private final String UPDATE  = "update schedule.public.subjects set name  = ? where subject_id = ?";
+    private final String CREATE  = "insert into public.subjects (name) values (?)";
+    private final String UPDATE  = "update public.subjects set name  = ? where subject_id = ?";
     private final String DELETE  = "delete from subjects where subject_id = ?";
 
     @Override
@@ -22,6 +22,7 @@ public class SubjectDao implements Dao<Subject> {
              PreparedStatement statement = connection.prepareStatement(GET)) {
             statement.setLong(1, id);
             ResultSet res = statement.executeQuery();
+            res.next();
             subject = new Subject()
                     .setId(res.getLong("subject_id"))
                     .setName(res.getString("name"));

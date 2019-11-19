@@ -10,15 +10,89 @@
 <html>
 <head>
     <title>GroupEdit</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </head>
-<body>
-    <form action="/group_change" method="post">
-        <input name="id" type="text" hidden value="${id}">
-        <input name="faculty" type="text" value="${fac}">
-        <input name="specialisation" type="text" value="${spec}">
-        <input name="group_number" type="text" value="${num}">
-        <input name="courses" type="number" min="1" max="6" value="${course}">
-        <input type="submit">
+<body style="width: 100%; background: lavender">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.jsp">ViPSchedule</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <%--          <li class="nav-item active">--%>
+            <%--            <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>--%>
+            <%--          </li>--%>
+        </ul>
+        <span class="navbar-text">
+          Developed by Viktor Pelepiak
+        </span>
+    </div>
+</nav>
+
+<br>
+
+    <form action="/ViPSchedule/group_change" method="post" style="width: 70%; margin: 0 auto">
+        <div class="form-group row">
+            <div class="col-sm-10">
+                    <input name="id" id="id" type="text" hidden value="${id}" class="form-control form-control-lg">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="faculty" class="col-sm-2 col-form-label">Faculty</label>
+            <div class="col-sm-10">
+                <input name="faculty" id="faculty" type="text" value="${fac}" class="form-control form-control-lg">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="specialisation" class="col-sm-2 col-form-label">Specialisation</label>
+            <div class="col-sm-10">
+                <input name="specialisation" id="specialisation" type="text" value="${spec}" class="form-control form-control-lg">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="group_number" class="col-sm-2 col-form-label">Group number</label>
+            <div class="col-sm-10">
+                <input name="group_number" id="group_number" type="text" value="${num}" class="form-control form-control-lg">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="courses" class="col-sm-2 col-form-label">Course</label>
+            <div class="col-sm-10">
+                <input name="courses" id="courses" type="number" min="1" max="6" value="${course}" class="form-control form-control-lg">
+            </div>
+        </div>
+
+        <div class="form-group row"  style="width: 100%;">
+            <div class="col-sm-4" style="width: 33%;">
+                <input class="btn btn-success" type="submit" value="Save changes">
+            </div>
+
+            <div class="col-sm-4" style="width: 33%;">
+                <input type="reset" class="btn btn-secondary" onclick="/group" value="Cancel" style="width: 33%;">
+            </div>
+        </div>
     </form>
 </body>
 </html>

@@ -35,11 +35,6 @@ public class LessonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doDelete(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             new LessonDao().save(new Lesson()
                     .setLessonTime(new LessonTime().setLessonNumber(Integer.parseInt(req.getParameter("lessonTime"))))
@@ -48,7 +43,7 @@ public class LessonServlet extends HttpServlet {
                     .setTeacher(new Teacher().setId(Long.valueOf(req.getParameter("teacher"))))
                     .setAuditory(new Auditory().setId(Long.valueOf(req.getParameter("auditory"))))
                     .setWeekParity(WeekParity.values()[Integer.parseInt(req.getParameter("weekParity"))])
-                    .setDayOfWeek(DayOfWeek.values()[Integer.parseInt(req.getParameter("day"))-1])
+                    .setDayOfWeek(DayOfWeek.values()[Integer.parseInt(req.getParameter("day"))])
                     .setSubject(new Subject().setId(Long.valueOf(req.getParameter("subject"))))
             );
             req.getRequestDispatcher("/index.jsp").forward(req,resp);

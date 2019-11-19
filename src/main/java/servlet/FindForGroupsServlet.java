@@ -28,8 +28,6 @@ public class FindForGroupsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        LOGGER.info("Hello, log!");
         GroupDao gd = new GroupDao();
         LessonDao ld = new LessonDao();
 

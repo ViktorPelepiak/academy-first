@@ -21,7 +21,7 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </head>
-  <body>
+  <body style="background: lavender">
   <table>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,11 +43,14 @@
 
 
     <tr><th>Що саме ви шукаєте</th></tr>
-    <tr><th><a href="/for_group">Розклад по групах</a></th></tr>
-    <tr><th><a href="/for_teacher">Розклад по викладачах</a></th></tr>
-    <tr><th><a href="/for_auditory">Розклад по аудиторіях</a></th></tr>
-    <tr><th><a href="/group">Інформація про групи</a></th></tr>
-    <tr><th><a href="/lessons">Додавання пари</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/for_group">Розклад по групах</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/for_teacher">Розклад по викладачах</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/for_auditory">Розклад по аудиторіях</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/group">Інформація про групи</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/teachers">Інформація про викладачів</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/subjects">Інформація про пердмети</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/auditory">Інформація про аудиторії</a></th></tr>
+    <tr><th><a href="${pageContext.request.contextPath}/lessons">Додавання пари</a></th></tr>
   </table>
   </body>
 </html>

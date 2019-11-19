@@ -13,7 +13,7 @@ public class TeacherDao implements Dao<Teacher> {
     private final String GET     = "select * from public.teachers as t where t.teacher_id = ?";
     private final String GET_ALL = "select * from public.teachers";
     private final String SAVE    = "insert into public.teachers (first_name, last_name, father_name, date_of_birth, info) values (?, ?, ?, ?, ?)";
-    private final String UPDATE  = "update schedule.public.teachers set first_name = ?, last_name = ?, father_name = ?, date_of_birth = ?, info = ? where teacher_id = ?";
+    private final String UPDATE  = "update public.teachers set first_name = ?, last_name = ?, father_name = ?, date_of_birth = ?, info = ? where teacher_id = ?";
     private final String DELETE  = "delete from teachers where teacher_id = ?";
 
     @Override
@@ -23,13 +23,13 @@ public class TeacherDao implements Dao<Teacher> {
              PreparedStatement statement = connection.prepareStatement(GET)) {
             statement.setLong(1, id);
             ResultSet res = statement.executeQuery();
-            Date date = res.getDate("date_of_birth");
+            res.next();
             teacher = new Teacher()
                     .setId(res.getLong("teacher_id"))
                     .setFirstName(res.getString("first_name"))
                     .setLastName(res.getString("last_name"))
                     .setFatherName(res.getString("father_name"))
-                    .setDateOfBirth(LocalDate.of(date.getYear(), date.getMonth(), date.getDay()))
+                    .setDateOfBirth(res.getDate("date_of_birth").toLocalDate())
                     .setInfo(res.getString("info"));
         }
         return Optional.ofNullable(teacher);
@@ -42,13 +42,12 @@ public class TeacherDao implements Dao<Teacher> {
              Statement statement = connection.createStatement()) {
             ResultSet res = statement.executeQuery(GET_ALL);
             while (res.next()) {
-                Date date = res.getDate("date_of_birth");
                 teachers.add(new Teacher()
                         .setId(res.getLong("teacher_id"))
                         .setFirstName(res.getString("first_name"))
                         .setLastName(res.getString("last_name"))
                         .setFatherName(res.getString("father_name"))
-                        .setDateOfBirth(date.toLocalDate())
+                        .setDateOfBirth(res.getDate("date_of_birth").toLocalDate())
                         .setInfo(res.getString("info")));
             }
         }

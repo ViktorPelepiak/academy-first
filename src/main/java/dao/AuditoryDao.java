@@ -22,6 +22,7 @@ public class AuditoryDao implements Dao<Auditory> {
              PreparedStatement statement = connection.prepareStatement(GET)) {
             statement.setLong(1, id);
             ResultSet res = statement.executeQuery();
+            res.next();
             auditory = new Auditory()
                     .setId(res.getLong("auditory_id"))
                     .setBuildingNumber(res.getInt("building_number"))

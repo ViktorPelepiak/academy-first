@@ -29,7 +29,7 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </head>
-<body style="width: 100%; background: antiquewhite;">
+<body style="width: 100%; background: lavender;">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="index.jsp">ViPSchedule</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -39,7 +39,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
                       <li class="nav-item active" style="width: 100%">
-                          <form method="post" id="test" action="/for_group">
+                          <form method="post" id="test" action="/ViPSchedule/for_group">
                               <select class="form-control" style="width: 100px" size="1" name="groupId"
                                   onchange="document.getElementById('test').submit()">
                               <c:forEach var="group" items="${groups}">

@@ -29,7 +29,7 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </head>
-<body>
+<body style="width: 100%; align-content: center; background: lavender">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="index.jsp">ViPSchedule</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,120 +47,117 @@
     </div>
 </nav>
 
-<form action="/lessons" method="post">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                Lesson time
-            </div>
-            <div class="col">
-                <select name="lessonTime" id="lessonTime">
-                    <c:forEach var="lessonT" items="${lessonTime}">
-                        <option value="${lessonT.lessonNumber}"> ${lessonT.lessonNumber} | ${lessonT.beginTime} | ${lessonT.endTime}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
+<br>
 
-        <div class="row">
-            <div class="col">
-                Group
-            </div>
-            <div class="col">
-                <select name="group" id="group">
-                    <c:forEach var="group" items="${groups}">
-                        <option value="${group.id}"> ${group.faculty} | ${group.specialisation} | ${group.groupNumber} | ${group.course}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Lesson type
-            </div>
-            <div class="col">
-                <select name="type" id="type">
-                    <option value="0">LECTURE</option>
-                    <option value="1">PRACTICE</option>
-                    <option value="2">LABORATORY</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Teacher
-            </div>
-            <div class="col">
-                <select name="teacher" id="teacher">
-                    <c:forEach var="teacher" items="${teachers}">
-                        <option value="${teacher.id}">${teacher.firstName} | ${teacher.fatherName} | ${teacher.lastName}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Auditory
-            </div>
-            <div class="col">
-                <select name="auditory" id="auditory">
-                    <c:forEach var="auditory" items="${auditories}">
-                        <option value="${auditory.id}">${auditory.buildingNumber} | ${auditory.auditoryNumber}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col">
-                Week parity
-            </div>
-            <div class="col">
-                <select name="weekParity" id="weekParity">
-                    <option value="0">PAIR WEEK</option>
-                    <option value="1">UNPAIR WEEK</option>
-                    <option value="2">ALL WEEKS</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Day of week
-            </div>
-            <div class="col">
-                <select name="day" id="day">
-                    <option value="1">Monday</option>
-                    <option value="2">Tuesday</option>
-                    <option value="3">Wednesday</option>
-                    <option value="4">Thursday</option>
-                    <option value="5">Friday</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                Subject
-            </div>
-            <div class="col">
-                <select name="subject" id="subject">
-                    <c:forEach var="subject" items="${subjects}">
-                        <option value="${subject.id}">${subject.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <button type="submit" class="button">Add lesson</button>
-            </div>
+<form action="/lessons" method="post" style="width: 70%; align-self: center; margin: 0 auto;">
+    <div class="form-group row">
+        <label for="lessonTime" class="col-sm-2 col-form-label">Lesson time</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="lessonTime" id="lessonTime">
+                <c:forEach var="lessonT" items="${lessonTime}">
+                    <option value="${lessonT.lessonNumber}"> ${lessonT.lessonNumber} | ${lessonT.beginTime} | ${lessonT.endTime}</option>
+                </c:forEach>
+            </select>
         </div>
     </div>
+
+    <div class="form-group row">
+        <label for="group" class="col-sm-2 col-form-label">Group</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="group" id="group">
+                <c:forEach var="group" items="${groups}">
+                    <option value="${group.id}"> ${group.faculty} | ${group.specialisation} | ${group.groupNumber}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="type" class="col-sm-2 col-form-label">Lesson type</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="type" id="type">
+                <option value="0">LECTURE</option>
+                <option value="1">PRACTICE</option>
+                <option value="2">LABORATORY</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="teacher" class="col-sm-2 col-form-label">Teacher</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="teacher" id="teacher">
+                <c:forEach var="teacher" items="${teachers}">
+                    <option value="${teacher.id}">${teacher.firstName} | ${teacher.fatherName} | ${teacher.lastName}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="auditory" class="col-sm-2 col-form-label">Auditory</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="auditory" id="auditory">
+                <c:forEach var="auditory" items="${auditories}">
+                    <option value="${auditory.id}">${auditory.buildingNumber} | ${auditory.auditoryNumber}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="weekParity" class="col-sm-2 col-form-label">Week parity</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="weekParity" id="weekParity">
+                <option value="0">PAIR WEEK</option>
+                <option value="1">UNPAIR WEEK</option>
+                <option value="2">ALL WEEKS</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="day" class="col-sm-2 col-form-label">Day of week</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="day" id="day">
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="subject" class="col-sm-2 col-form-label">Subject</label>
+        <div class="col-sm-10">
+            <select class="form-control form-control-lg" name="subject" id="subject">
+                <c:forEach var="subject" items="${subjects}">
+                <option value="${subject.id}">${subject.name}</option>
+                </c:forEach>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="form-group row">
+            <div class="col-sm-4" style="align-self: auto">
+                <input class="btn btn-success" type="submit" name="submit" id="submit" style="width: 25%">
+            </div>
+
+        <div class="col-sm-4" style="align-self: auto">
+            <input class="btn btn-success" type="reset" name="cancel" id="cancel" style="width: 25%" onclick="index.jsp">
+        </div>
+
+
+
+<%--            <div style="align-self: auto">--%>
+<%--                <button type="button" class="btn btn-secondary" onclick="index.jsp">Cancel</button>--%>
+<%--            </div>--%>
+    </div>
+
+
 
 </form>
 </body>

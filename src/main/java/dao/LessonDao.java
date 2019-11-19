@@ -73,7 +73,7 @@ public class LessonDao implements Dao<Lesson> {
         LessonDto result = new LessonDto()
                 .setLessonTime(res.getInt("lesson_time_id"))
                 .setGroupNumber(res.getString("group_number"))
-                .setAuditory(res.getInt("building_number") + "-" + res.getInt("auditory_number"))
+                .setAuditory(res.getInt("building_number") + "-" + res.getString("auditory_number"))
                 .setLessonType(res.getInt("lesson_type"))
                 .setSubject(res.getString("name"))
                 .setTeacher(res.getString("last_name")+" "+res.getString("first_name"))

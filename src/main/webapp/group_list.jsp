@@ -29,8 +29,8 @@
     <script src="../../dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </head>
-<body style="width: 100%;" class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body style="width: 100%; background: lavender">
+<nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top navbar-dark bg-dark">
     <a class="navbar-brand" href="index.jsp">ViPSchedule</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
     </div>
 </nav>
 <br>
-<table class="table table-hover table-dark">
+<table class="table table-striped table-hover" style="width: 80%; margin: 0 auto; text-align: center;">
     <thead>
     <tr>
         <th scope="col">Faculty</th>
@@ -64,26 +64,26 @@
     <tbody>
     <c:forEach var="g" items="${groups}">
         <tr id="group_${g.id}">
-            <th scope="row">
+            <td scope="row">
+                    ${g.faculty}
+            </td>
+            <td>
+                    ${g.specialisation}
+            </td>
+            <td>
                     ${g.groupNumber}
-            </th>
+            </td>
             <td>
                     ${g.course}
             </td>
             <td>
-                    ${g.faculty}
-            </td>
-            <td class="col-sm">
-                    ${g.specialisation}
-            </td>
-            <td>
-                <form action="/group_change" method="get">
+                <form action="/ViPSchedule/group_change" method="get" style="float: left;">
                     <input type="text" value="${g.id}" name="id" hidden>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
-            </td>
-            <td>
-                <form action="/group" method="post">
+<%--            </td>--%>
+<%--            <td>--%>
+                <form action="/ViPSchedule/group" method="post" style="float: right;">
                     <input type="number" value="${g.id}" hidden name="del_id">
                     <div class="modal fade" id="exampleModal${g.id}" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -106,22 +106,18 @@
                         </div>
                     </div>
 
-                    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal${g.id}"
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal${g.id}"
                        href="#exampleModal${g.id}">
                         Delete
-                    </a>
+                    </button>
                 </form>
             </td>
         </tr>
     </c:forEach>
-    <tr>
-        <td colspan="6">
-            <form action="/group_change" id="sdf">
-                <button type="submit" class="btn btn-success">Add group</button>
-            </form>
-        </td>
-    </tr>
     </tbody>
 </table>
+<form action="/ViPSchedule/group_change" id="sdf" style="width: 80%; margin: 0 auto;">
+    <button type="submit" class="btn btn-success">Add group</button>
+</form>
 </body>
 </html>

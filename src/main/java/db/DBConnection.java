@@ -31,19 +31,24 @@ public class DBConnection {
         Properties properties = new Properties();
 //        PropertyResourceBundle bundle = (PropertyResourceBundle)PropertyResourceBundle.getBundle("application");
 //        Class.forName("org.postgresql.Driver");
-//        String server_name = bundle.getString("jdbc.server.name");
-//        String database_name = bundle.getString("jdbc.database.name");
-//        String database_username = bundle.getString("jdbc.database.username");
-//        String database_password = bundle.getString("jdbc.database_password");
-//        String app_name = bundle.getString("application_name");
+        final String SERVER_NAME = "localhost";
+        final String DATABASE_NAME = "vip_schedule";
+        final String DATABASE_USERNAME = "postgres";
+        final String DATABASE_PASSWORD = "root";
+        final String APP_NAME = "ViPSchedule";
 
-        properties.load(new FileInputStream(PROPERTIES));
+//        properties.load(new FileInputStream(PROPERTIES));
 //        properties.load(DBConnection.class.getClassLoader().getResourceAsStream(PROPERTIES));
-        source.setServerName(properties.getProperty("jdbc.server.name"));
-        source.setDatabaseName(properties.getProperty("jdbc.database.name"));
-        source.setUser(properties.getProperty("jdbc.database.username"));
-        source.setPassword(properties.getProperty("jdbc.database.password"));
-        source.setApplicationName(properties.getProperty("application.name"));
+//        source.setServerName(properties.getProperty("jdbc.server.name"));
+//        source.setDatabaseName(properties.getProperty("jdbc.database.name"));
+//        source.setUser(properties.getProperty("jdbc.database.username"));
+//        source.setPassword(properties.getProperty("jdbc.database.password"));
+//        source.setApplicationName(properties.getProperty("application.name"));
+        source.setApplicationName(APP_NAME);
+        source.setServerName(SERVER_NAME);
+        source.setDatabaseName(DATABASE_NAME);
+        source.setUser(DATABASE_USERNAME);
+        source.setPassword(DATABASE_PASSWORD);
 
         poolDataSource = source;
     }
@@ -53,7 +58,6 @@ public class DBConnection {
         try{
             if (Objects.isNull(connection)) throw new NullPointerException();
         }catch (NullPointerException e){
-            System.out.println("!!!!!!!!!!!!!!!!!!!NULLL!!!!!!!!!!!!!!!!!!!");
             e.printStackTrace();
         }
         return connection;
