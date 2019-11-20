@@ -1,9 +1,10 @@
 package servlet.auditory;
 
 import dao.AuditoryDao;
-import dao.TeacherDao;
 import model.Auditory;
-import model.Teacher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import servlet.FindForGroupsServlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,10 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 @WebServlet(urlPatterns = "/auditory_change")
 public class AuditoryAddOrEditItem extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id")==null) {
@@ -35,6 +37,7 @@ public class AuditoryAddOrEditItem extends HttpServlet {
                 req.setAttribute("floor", a.getFloor());
                 req.setAttribute("aud", a.getAuditoryNumber());
             } catch (SQLException e) {
+                LOGGER.error(e);
                 e.printStackTrace();
             }
         }
@@ -60,6 +63,7 @@ public class AuditoryAddOrEditItem extends HttpServlet {
             }
             new AuditoryCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

@@ -17,14 +17,14 @@ import java.time.LocalDate;
 public class TeacherAddOrEditItem extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("id")==null) {
+        if (req.getParameter("id") == null) {
             req.setAttribute("id", "");
             req.setAttribute("f_name", "");
             req.setAttribute("l_name", "");
             req.setAttribute("fth_name", "");
             req.setAttribute("dob", "");
             req.setAttribute("info", "");
-        }else{
+        } else {
             Long id = Long.valueOf(req.getParameter("id"));
             TeacherDao td = new TeacherDao();
             Teacher t;
@@ -57,9 +57,9 @@ public class TeacherAddOrEditItem extends HttpServlet {
                 .setDateOfBirth(LocalDate.parse(req.getParameter("dob")))
                 .setInfo(req.getParameter("info"));
         try {
-            if (req.getParameter("id")==null || req.getParameter("id").equals("")){
+            if (req.getParameter("id") == null || req.getParameter("id").equals("")) {
                 td.save(t);
-            }else{
+            } else {
                 t.setId(Long.valueOf(req.getParameter("id")));
                 td.update(t);
             }

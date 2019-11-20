@@ -17,6 +17,6 @@ public class LocalTimeJSONAdapter implements JsonSerializer<LocalTime>, JsonDese
     @Override
     public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject o = json.getAsJsonObject();
-        return LocalTime.of(o.getAsJsonObject("hour").getAsInt(),o.getAsJsonObject("minute").getAsInt());
+        return LocalTime.of(o.getAsJsonObject("hour").getAsInt(), o.getAsJsonObject("minute").getAsInt());
     }
 }

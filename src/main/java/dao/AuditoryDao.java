@@ -69,8 +69,7 @@ public class AuditoryDao implements Dao<Auditory> {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     auditory.setId(generatedKeys.getLong(1));
-                }
-                else {
+                } else {
                     throw new SQLException("Creating auditory failed, no ID obtained.");
                 }
             }

@@ -9,7 +9,8 @@ public class LessonDto {
     private String auditory;
     private String subject;
 
-    public LessonDto(){}
+    public LessonDto() {
+    }
 
     public int getDay() {
         return day;

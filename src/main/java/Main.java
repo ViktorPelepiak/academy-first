@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, IOException, JAXBException {
         Schedule schedule = new Schedule();
-        
+
         List<Teacher> teachers = new LinkedList<>();
         for (int i = 0; i < TEACHER_QUANTITY; i++) {
             teachers.add(new Teacher()
@@ -29,32 +29,32 @@ public class Main {
                     .setFirstName("FN_" + i)
                     .setFatherName("FthN_" + i)
                     .setInfo("some teacher")
-                    .setDateOfBirth(LocalDate.of(1980,i+1,1))
+                    .setDateOfBirth(LocalDate.of(1980, i + 1, 1))
             );
         }
-        
-        List<LessonTime> lessonTimes= new LinkedList<>();
+
+        List<LessonTime> lessonTimes = new LinkedList<>();
         for (int i = 0; i < 8; i++) {
             lessonTimes.add(new LessonTime()
                     .setLessonNumber(i)
-                    .setBeginTime(LocalTime.of(8,20))
-                    .setEndTime(LocalTime.of(9,40))
+                    .setBeginTime(LocalTime.of(8, 20))
+                    .setEndTime(LocalTime.of(9, 40))
             );
         }
-        
+
         List<Subject> subjects = new LinkedList<>();
         for (int i = 0; i < SUBJECT_QUANTITY; i++) {
             subjects.add(new Subject()
                     .setName("Sub_" + i)
             );
         }
-        
+
         List<Auditory> auditories = new LinkedList<>();
         for (int i = 0; i < AUDITORY_QUANTITY; i++) {
             auditories.add(new Auditory()
-                .setBuildingNumber(1)
-                .setFloor(i/5 + 1)
-                .setAuditoryNumber("" + i)
+                    .setBuildingNumber(1)
+                    .setFloor(i / 5 + 1)
+                    .setAuditoryNumber("" + i)
             );
 
         }

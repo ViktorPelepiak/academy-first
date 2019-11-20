@@ -5,6 +5,8 @@ import dao.LessonDao;
 import dto.LessonDto;
 import enums.WeekParity;
 import model.Auditory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,7 +24,8 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/for_auditory")
 public class FindForAuditoryServlet extends HttpServlet {
-//    private static final Logger LOGGER = LogManager.getLogger(FindForAuditoryServlet.class);
+
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,7 +65,7 @@ public class FindForAuditoryServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("auditory.jsp");
             requestDispatcher.forward(req, resp);
         } catch (SQLException | ParseException e) {
-//            LOGGER.error(e);
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

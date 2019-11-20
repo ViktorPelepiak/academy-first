@@ -51,76 +51,84 @@
 </nav>
 <br>
 
-<table class="table table-striped table-hover" style="width: 80%; margin: 0 auto; text-align: center;">
-    <thead>
-    <tr>
-        <th scope="col">First name</th>
-        <th scope="col">Last name</th>
-        <th scope="col">Father name</th>
-        <th scope="col">Date of birth</th>
-        <th scope="col">Info</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="t" items="${teachers}">
-        <tr id="group_${t.id}">
-            <td scope="row">
-                    ${t.firstName}
-            </td>
-            <td>
-                    ${t.lastName}
-            </td>
-            <td>
-                    ${t.fatherName}
-            </td>
-            <td>
-                    ${t.dateOfBirth}
-            </td>
-            <td>
-                    ${t.info}
-            </td>
-            <td>
-                <form action="/ViPSchedule/teacher_change" method="get" style="float: left;">
-                    <input type="text" value="${t.id}" name="id" hidden>
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                    <%--            </td>--%>
-                    <%--            <td>--%>
-                <form action="/ViPSchedule/group" method="post" style="float: right;">
-                    <input type="number" value="${t.id}" hidden name="del_id">
-                    <div class="modal fade" id="exampleModal${t.id}" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Delete item</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Delete</button>
+<c:choose>
+    <c:when test="${size > 0}">
+        <table class="table table-striped table-hover" style="width: 80%; margin: 0 auto; text-align: center;">
+            <thead>
+            <tr>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Father name</th>
+                <th scope="col">Date of birth</th>
+                <th scope="col">Info</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="t" items="${teachers}">
+                <tr id="group_${t.id}">
+                    <td scope="row">
+                            ${t.firstName}
+                    </td>
+                    <td>
+                            ${t.lastName}
+                    </td>
+                    <td>
+                            ${t.fatherName}
+                    </td>
+                    <td>
+                            ${t.dateOfBirth}
+                    </td>
+                    <td>
+                            ${t.info}
+                    </td>
+                    <td>
+                        <form action="/ViPSchedule/teacher_change" method="get" style="float: left;">
+                            <input type="text" value="${t.id}" name="id" hidden>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                            <%--            </td>--%>
+                            <%--            <td>--%>
+                        <form action="/ViPSchedule/teachers" method="post" style="float: right;">
+                            <input type="number" value="${t.id}" hidden name="del_id">
+                            <div class="modal fade" id="exampleModal${t.id}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete item</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal${g.id}"
-                            href="#exampleModal${t.id}">
-                        Delete
-                    </button>
-                </form>
-            </td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#exampleModal${t.id}"
+                                    href="#exampleModal${t.id}">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:when>
+    <c:otherwise>
+        <h1 style="text-align: center;">The table is empty</h1>
+    </c:otherwise>
+</c:choose>
 <form action="/ViPSchedule/teacher_change" id="sdf" style="width: 80%; margin: 0 auto;">
     <button type="submit" class="btn btn-success">Add teacher</button>
 </form>

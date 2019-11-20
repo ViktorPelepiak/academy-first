@@ -4,6 +4,8 @@ import dao.*;
 import enums.LessonType;
 import enums.WeekParity;
 import model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +19,8 @@ import java.time.DayOfWeek;
 
 @WebServlet(urlPatterns = "/lessons")
 public class LessonServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -27,6 +31,7 @@ public class LessonServlet extends HttpServlet {
             req.setAttribute("subjects", new SubjectDao().getAll());
         } catch (SQLException e) {
             e.printStackTrace();
+            LOGGER.error(e);
         }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("add_lesson.jsp");
@@ -46,8 +51,9 @@ public class LessonServlet extends HttpServlet {
                     .setDayOfWeek(DayOfWeek.values()[Integer.parseInt(req.getParameter("day"))])
                     .setSubject(new Subject().setId(Long.valueOf(req.getParameter("subject"))))
             );
-            req.getRequestDispatcher("/index.jsp").forward(req,resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } catch (SQLException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

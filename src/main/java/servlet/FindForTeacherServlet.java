@@ -5,6 +5,8 @@ import dao.TeacherDao;
 import dto.LessonDto;
 import enums.WeekParity;
 import model.Teacher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,7 +24,7 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/for_teacher")
 public class FindForTeacherServlet extends HttpServlet {
-//    private static final
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +53,7 @@ public class FindForTeacherServlet extends HttpServlet {
             I_week = ld.getAllForTeacher(teacherId, WeekParity.UNPAIR_WEEK);
             II_week = ld.getAllForTeacher(teacherId, WeekParity.PAIR_WEEK);
             today = Methods.selectTodayLessons(I_week, II_week);
-            tomorrow =Methods.selectTomorrowLessons(I_week, II_week);
+            tomorrow = Methods.selectTomorrowLessons(I_week, II_week);
 
             req.setAttribute("todayDay", now.getDayOfWeek().toString());
             req.setAttribute("tomorrowDay", DayOfWeek.values()[(Arrays.asList(DayOfWeek.values()).indexOf(now.getDayOfWeek()) + 1) % 7].toString());
@@ -64,6 +66,7 @@ public class FindForTeacherServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher.jsp");
             requestDispatcher.forward(req, resp);
         } catch (SQLException | ParseException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

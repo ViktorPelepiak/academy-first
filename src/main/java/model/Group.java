@@ -37,7 +37,7 @@ public class Group {
         return course;
     }
 
-    public Group setId(Long id){
+    public Group setId(Long id) {
         this.id = id;
         return this;
     }

@@ -49,7 +49,7 @@
 
 <br>
 
-<form action="/lessons" method="post" style="width: 70%; align-self: center; margin: 0 auto;">
+<form action="/ViPSchedule/lessons" method="post" style="width: 70%; align-self: center; margin: 0 auto;">
     <div class="form-group row">
         <label for="lessonTime" class="col-sm-2 col-form-label">Lesson time</label>
         <div class="col-sm-10">
@@ -142,19 +142,13 @@
     <br>
 
     <div class="form-group row">
-            <div class="col-sm-4" style="align-self: auto">
-                <input class="btn btn-success" type="submit" name="submit" id="submit" style="width: 25%">
-            </div>
-
         <div class="col-sm-4" style="align-self: auto">
-            <input class="btn btn-success" type="reset" name="cancel" id="cancel" style="width: 25%" onclick="index.jsp">
+            <input value="Add lesson" class="btn btn-success" type="submit" name="submit" id="submit" style="width: 25%">
         </div>
 
-
-
-<%--            <div style="align-self: auto">--%>
-<%--                <button type="button" class="btn btn-secondary" onclick="index.jsp">Cancel</button>--%>
-<%--            </div>--%>
+        <div class="col-sm-4" style="align-self: auto">
+            <input value="Cancel" class="btn btn-secondary" type="reset" name="cancel" id="cancel" style="width: 25%" onclick="index.jsp">
+        </div>
     </div>
 
 

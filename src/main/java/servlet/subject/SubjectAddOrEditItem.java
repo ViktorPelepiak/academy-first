@@ -1,9 +1,10 @@
 package servlet.subject;
 
 import dao.SubjectDao;
-import dao.TeacherDao;
 import model.Subject;
-import model.Teacher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import servlet.FindForGroupsServlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,16 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 @WebServlet(urlPatterns = "/subject_change")
 public class SubjectAddOrEditItem extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("id")==null) {
+        if (req.getParameter("id") == null) {
             req.setAttribute("id", "");
             req.setAttribute("name", "");
-        }else{
+        } else {
             Long id = Long.valueOf(req.getParameter("id"));
             SubjectDao sd = new SubjectDao();
             Subject s;
@@ -31,6 +33,7 @@ public class SubjectAddOrEditItem extends HttpServlet {
                 req.setAttribute("id", s.getId());
                 req.setAttribute("name", s.getName());
             } catch (SQLException e) {
+                LOGGER.error(e);
                 e.printStackTrace();
             }
         }
@@ -46,14 +49,15 @@ public class SubjectAddOrEditItem extends HttpServlet {
         Subject s = new Subject()
                 .setName(req.getParameter("name"));
         try {
-            if (req.getParameter("id")==null || req.getParameter("id").equals("")){
+            if (req.getParameter("id") == null || req.getParameter("id").equals("")) {
                 sd.save(s);
-            }else{
+            } else {
                 s.setId(Long.valueOf(req.getParameter("id")));
                 sd.update(s);
             }
             new SubjectCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

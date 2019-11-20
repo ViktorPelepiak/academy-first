@@ -50,68 +50,77 @@
     </div>
 </nav>
 <br>
-<table class="table table-striped table-hover" style="width: 80%; margin: 0 auto; text-align: center;">
-    <thead>
-    <tr>
-        <th scope="col">Building number</th>
-        <th scope="col">Floor</th>
-        <th scope="col">Auditory number</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="a" items="${auditory}">
-        <tr id="group_${a.id}">
-            <td scope="row">
-                    ${a.buildingNumber}
-            </td>
-            <td>
-                    ${a.floor}
-            </td>
-            <td>
-                    ${a.auditoryNumber}
-            </td>
-            <td>
-                <form action="/ViPSchedule/auditory_change" method="get" style="float: left;">
-                    <input type="text" value="${a.id}" name="id" hidden>
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-<%--            </td>--%>
-<%--            <td>--%>
-                <form action="/ViPSchedule/auditory" method="post" style="float: right;">
-                    <input type="number" value="${a.id}" hidden name="del_id">
-                    <div class="modal fade" id="exampleModal${a.id}" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Delete item</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Delete</button>
+<c:choose>
+    <c:when test="${size > 0}">
+        <table class="table table-striped table-hover" style="width: 80%; margin: 0 auto; text-align: center;">
+            <thead>
+            <tr>
+                <th scope="col">Building number</th>
+                <th scope="col">Floor</th>
+                <th scope="col">Auditory number</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="a" items="${auditory}">
+                <tr id="group_${a.id}">
+                    <td scope="row">
+                            ${a.buildingNumber}
+                    </td>
+                    <td>
+                            ${a.floor}
+                    </td>
+                    <td>
+                            ${a.auditoryNumber}
+                    </td>
+                    <td>
+                        <form action="/ViPSchedule/auditory_change" method="get" style="float: left;">
+                            <input type="text" value="${a.id}" name="id" hidden>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                            <%--            </td>--%>
+                            <%--            <td>--%>
+                        <form action="/ViPSchedule/auditory" method="post" style="float: right;">
+                            <input type="number" value="${a.id}" hidden name="del_id">
+                            <div class="modal fade" id="exampleModal${a.id}" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete item</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal${a.id}"
-                       href="#exampleModal${a.id}">
-                        Delete
-                    </button>
-                </form>
-            </td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#exampleModal${a.id}"
+                                    href="#exampleModal${a.id}">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:when>
+    <c:otherwise>
+        <h1 style="text-align: center;">The table is empty</h1>
+    </c:otherwise>
+</c:choose>
 <form action="/ViPSchedule/auditory_change" id="sdf" style="width: 80%; margin: 0 auto;">
     <button type="submit" class="btn btn-success">Add auditory</button>
 </form>

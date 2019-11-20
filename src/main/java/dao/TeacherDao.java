@@ -4,17 +4,16 @@ import db.DBConnection;
 import model.Teacher;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
 public class TeacherDao implements Dao<Teacher> {
-    private final String GET     = "select * from public.teachers as t where t.teacher_id = ?";
+    private final String GET = "select * from public.teachers as t where t.teacher_id = ?";
     private final String GET_ALL = "select * from public.teachers";
-    private final String SAVE    = "insert into public.teachers (first_name, last_name, father_name, date_of_birth, info) values (?, ?, ?, ?, ?)";
-    private final String UPDATE  = "update public.teachers set first_name = ?, last_name = ?, father_name = ?, date_of_birth = ?, info = ? where teacher_id = ?";
-    private final String DELETE  = "delete from teachers where teacher_id = ?";
+    private final String SAVE = "insert into public.teachers (first_name, last_name, father_name, date_of_birth, info) values (?, ?, ?, ?, ?)";
+    private final String UPDATE = "update public.teachers set first_name = ?, last_name = ?, father_name = ?, date_of_birth = ?, info = ? where teacher_id = ?";
+    private final String DELETE = "delete from teachers where teacher_id = ?";
 
     @Override
     public Optional<Teacher> get(long id) throws SQLException {
@@ -58,11 +57,11 @@ public class TeacherDao implements Dao<Teacher> {
     public Teacher save(Teacher teacher) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1,teacher.getFirstName());
-            statement.setString(2,teacher.getLastName());
-            statement.setString(3,teacher.getFatherName());
+            statement.setString(1, teacher.getFirstName());
+            statement.setString(2, teacher.getLastName());
+            statement.setString(3, teacher.getFatherName());
             statement.setDate(4, Date.valueOf(teacher.getDateOfBirth()));
-            statement.setString(5,teacher.getInfo());
+            statement.setString(5, teacher.getInfo());
             int id = statement.executeUpdate();
 
             if (id == 0) {
@@ -72,8 +71,7 @@ public class TeacherDao implements Dao<Teacher> {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     teacher.setId(generatedKeys.getLong(1));
-                }
-                else {
+                } else {
                     throw new SQLException("Creating teacher failed, no ID obtained.");
                 }
             }
@@ -84,13 +82,13 @@ public class TeacherDao implements Dao<Teacher> {
     @Override
     public Teacher update(Teacher teacher) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE)){
-            statement.setString(1,teacher.getFirstName());
-            statement.setString(2,teacher.getLastName());
-            statement.setString(3,teacher.getFatherName());
+             PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+            statement.setString(1, teacher.getFirstName());
+            statement.setString(2, teacher.getLastName());
+            statement.setString(3, teacher.getFatherName());
             statement.setDate(4, Date.valueOf(teacher.getDateOfBirth()));
-            statement.setString(5,teacher.getInfo());
-            statement.setLong(6,teacher.getId());
+            statement.setString(5, teacher.getInfo());
+            statement.setLong(6, teacher.getId());
             statement.executeUpdate();
         }
         return teacher;
@@ -99,7 +97,7 @@ public class TeacherDao implements Dao<Teacher> {
     @Override
     public void deleteById(Long id) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE)){
+             PreparedStatement statement = connection.prepareStatement(DELETE)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         }

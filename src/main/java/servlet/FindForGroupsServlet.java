@@ -33,23 +33,25 @@ public class FindForGroupsServlet extends HttpServlet {
 
         int groupId;
 
-        if (req.getParameter("groupId") == null) {
-            groupId = 1;
-        } else {
-            groupId = Integer.parseInt(req.getParameter("groupId"));
-        }
-
         List<Group> groups;
         List<LessonDto> today;
         List<LessonDto> tomorrow;
         List<LessonDto> I_week;
         List<LessonDto> II_week;
+
         try {
             groups = gd.getAll();
             LocalDate now = LocalDate.now();
 
+            if (req.getParameter("groupId") == null) {
+                groupId = Math.toIntExact(groups.get(0).getId());
+            } else {
+                groupId = Integer.parseInt(req.getParameter("groupId"));
+            }
+
             I_week = ld.getAllForGroup(groupId, WeekParity.UNPAIR_WEEK);
             II_week = ld.getAllForGroup(groupId, WeekParity.PAIR_WEEK);
+
             today = Methods.selectTodayLessons(I_week, II_week);
             tomorrow = Methods.selectTomorrowLessons(I_week, II_week);
 

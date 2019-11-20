@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class LessonTime implements Comparable{
+public class LessonTime implements Comparable {
     @Min(value = 1, message = "Lesson number must be for 1 to 6")
     @Max(value = 8, message = "Lesson number must be for 1 to 6")
     private int lessonNumber;
@@ -59,7 +59,7 @@ public class LessonTime implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        LessonTime lt = (LessonTime)o;
-        return this.lessonNumber-lt.lessonNumber;
+        LessonTime lt = (LessonTime) o;
+        return this.lessonNumber - lt.lessonNumber;
     }
 }

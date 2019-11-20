@@ -39,7 +39,7 @@ public class Teacher {
         return info;
     }
 
-    public LocalDate getDateOfBirth(){
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 

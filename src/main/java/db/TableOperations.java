@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class TableOperations {
     public final String CREATE_AUDITORY = "create table if not exists auditories (auditory_id serial not null, building_number integer not null, floor integer not null, auditory_number character varying(10) not null, primary key (auditory_id));";
-    public final String CREATE_SUBJECTS = "create table if not exists  subjects (subject_id serial not null, name character varying(30) not null, primary key (subject_id));";
+    public final String CREATE_SUBJECTS = "create table if not exists  subjects (subject_id serial not null, name character varying(40) not null, primary key (subject_id));";
     public final String CREATE_LESSON_TIME = "create table if not exists  lessons_time (lesson_number integer not null, begin_time time without time zone not null, end_time time without time zone not null, primary key (lesson_number));";
     public final String CREATE_TEACHERS = "create table if not exists  teachers (teacher_id serial not null, first_name character varying(15) not null , last_name character varying (15) not null , father_name character varying (15) not null , date_of_birth date not null , info character varying (200), primary key (teacher_id));";
     public final String CREATE_GROUPS = "create table if not exists  groups (group_id serial not null, faculty character varying(15) not null, specialisation character varying(20) not null, group_number character varying(10) not null, course integer not null, primary key (group_id));";
@@ -24,7 +24,7 @@ public class TableOperations {
 
     public void createAuditoriesTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_AUDITORY);
             statement.close();
             connection.close();
@@ -33,7 +33,7 @@ public class TableOperations {
 
     public void dropAuditoriesTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_AUDITORY);
             statement.close();
             connection.close();
@@ -42,7 +42,7 @@ public class TableOperations {
 
     public void createSubjectsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_SUBJECTS);
             statement.close();
             connection.close();
@@ -51,7 +51,7 @@ public class TableOperations {
 
     public void dropSubjectsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_SUBJECTS);
             statement.close();
             connection.close();
@@ -60,7 +60,7 @@ public class TableOperations {
 
     public void createLessonsTimeTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_LESSON_TIME);
             statement.close();
             connection.close();
@@ -69,7 +69,7 @@ public class TableOperations {
 
     public void dropLessonsTimeTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_LESSON_TIME);
             statement.close();
             connection.close();
@@ -78,7 +78,7 @@ public class TableOperations {
 
     public void createTeachersTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_TEACHERS);
             statement.close();
             connection.close();
@@ -87,7 +87,7 @@ public class TableOperations {
 
     public void dropTeahersTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_TEACHERS);
             statement.close();
             connection.close();
@@ -96,7 +96,7 @@ public class TableOperations {
 
     public void createGroupsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_GROUPS);
             statement.close();
             connection.close();
@@ -105,7 +105,7 @@ public class TableOperations {
 
     public void dropGroupsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_GROUPS);
             statement.close();
             connection.close();
@@ -114,7 +114,7 @@ public class TableOperations {
 
     public void createLessonsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.execute(CREATE_LESSONS);
             statement.close();
             connection.close();
@@ -123,7 +123,7 @@ public class TableOperations {
 
     public void dropLessonsTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_LESSONS);
             statement.close();
             connection.close();
@@ -132,7 +132,7 @@ public class TableOperations {
 
     public void createAllTable() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(CREATE_AUDITORY);
             statement.executeUpdate(CREATE_SUBJECTS);
             statement.executeUpdate(CREATE_LESSON_TIME);
@@ -146,7 +146,7 @@ public class TableOperations {
 
     public void dropAllTables() throws SQLException, ClassNotFoundException {
         try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate(DROP_LESSONS);
             statement.executeUpdate(DROP_AUDITORY);
             statement.executeUpdate(DROP_SUBJECTS);

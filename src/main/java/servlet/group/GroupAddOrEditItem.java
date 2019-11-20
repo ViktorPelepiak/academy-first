@@ -2,6 +2,9 @@ package servlet.group;
 
 import dao.GroupDao;
 import model.Group;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import servlet.FindForGroupsServlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,15 +17,17 @@ import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/group_change")
 public class GroupAddOrEditItem extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("id")==null) {
+        if (req.getParameter("id") == null) {
             req.setAttribute("id", "");
             req.setAttribute("fac", "");
             req.setAttribute("spec", "");
             req.setAttribute("num", "");
             req.setAttribute("course", "");
-        }else{
+        } else {
             Long id = Long.valueOf(req.getParameter("id"));
             GroupDao gd = new GroupDao();
             Group g;
@@ -34,6 +39,7 @@ public class GroupAddOrEditItem extends HttpServlet {
                 req.setAttribute("num", g.getGroupNumber());
                 req.setAttribute("course", g.getCourse());
             } catch (SQLException e) {
+                LOGGER.error(e);
                 e.printStackTrace();
             }
         }
@@ -52,14 +58,15 @@ public class GroupAddOrEditItem extends HttpServlet {
                 .setGroupNumber(req.getParameter("group_number"))
                 .setCourse(Integer.parseInt(req.getParameter("courses")));
         try {
-            if (req.getParameter("id")==null || req.getParameter("id").equals("")){
+            if (req.getParameter("id") == null || req.getParameter("id").equals("")) {
                 gd.save(g);
-            }else{
+            } else {
                 g.setId(Long.valueOf(req.getParameter("id")));
                 gd.update(g);
             }
             new GroupCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }
