@@ -37,7 +37,7 @@ public class Group {
         return course;
     }
 
-    public Group setId(Long id){
+    public Group setId(Long id) {
         this.id = id;
         return this;
     }
@@ -76,5 +76,15 @@ public class Group {
     @Override
     public int hashCode() {
         return Objects.hash(faculty, specialisation, groupNumber, course);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "faculty='" + faculty + '\'' +
+                ", specialisation='" + specialisation + '\'' +
+                ", groupNumber='" + groupNumber + '\'' +
+                ", course=" + course +
+                '}';
     }
 }

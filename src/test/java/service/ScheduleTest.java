@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class ScheduleTest {
     private Schedule schedule;
@@ -106,7 +107,7 @@ public class ScheduleTest {
     @Test
     public void successAddLessonTest(){
         try {
-            assertEquals(schedule.addLesson(lesson1).getSchedule().get(0),lesson1);
+            assertTrue(schedule.addLesson(lesson1));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,7 +115,8 @@ public class ScheduleTest {
 
     @Test(expectedExceptions = AddLessonException.class)
     public void successAddLessonExceptionTest() throws AddLessonException {
-        schedule.addLesson(lesson1).addLesson(lesson1);
+        schedule.addLesson(lesson1);
+        schedule.addLesson(lesson1);
     }
 
     @Test

@@ -1,9 +1,9 @@
 package io;
 
 import adapter.LocalTimeJSONAdapter;
-import service.Schedule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import service.Schedule;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
