@@ -32,15 +32,15 @@ public class SubjectAddOrEditItem extends HttpServlet {
                 s = sd.get(id).get();
                 req.setAttribute("id", s.getId());
                 req.setAttribute("name", s.getName());
+                req.setAttribute("error", null);
             } catch (SQLException e) {
+                req.setAttribute("error", e.getMessage());
                 LOGGER.error(e);
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("subject_edit.jsp");
-        requestDispatcher.forward(req, resp);
-
+        req.getRequestDispatcher("subject_edit.jsp").forward(req, resp);
     }
 
     @Override
@@ -55,10 +55,12 @@ public class SubjectAddOrEditItem extends HttpServlet {
                 s.setId(Long.valueOf(req.getParameter("id")));
                 sd.update(s);
             }
+            req.setAttribute("error", null);
             new SubjectCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

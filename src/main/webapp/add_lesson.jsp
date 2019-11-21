@@ -25,7 +25,12 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/functions.js"></script>
+    <script>
+        function x() {
+            document.getElementById('exampleModal').style.display = 'none';
+            document.getElementById('exampleModal').className = 'modal fade';
+        }
+    </script>
 </head>
 <body style="width: 100%; align-content: center; background: lavender" onload="function errorAlert() { if (${error != null}) {alert(${error})}}">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,6 +50,29 @@
         </span>
     </div>
 </nav>
+
+<!-- Modal -->
+<c:if test="${error!=null}">
+    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block" data-show="true">
+        <div class="modal-dialog" role="document" data-show="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="x()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        ${error}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="x();">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</c:if>
 
 <br>
 
@@ -144,10 +172,7 @@
 
     <div class="form-group row">
         <div class="col-sm-4" style="align-self: auto">
-            <input type="submit" class="btn btn-success" value="Add lesson">
-            <%--            <button type="button" class="btn btn-success" onclick="createLesson()" name="submit" id="submit" style="width: 100%;">Add--%>
-<%--                lesson--%>
-<%--            </button>--%>
+            <input type="submit" class="btn btn-success" value="Add lesson" style="width: 100%">
         </div>
 
         <div class="col-sm-4" style="align-self: auto">

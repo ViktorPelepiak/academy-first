@@ -25,20 +25,25 @@ public class SubjectCrudServlet extends HttpServlet {
             List<Subject> subjects = new SubjectDao().getAll();
             req.setAttribute("size", subjects.size());
             req.setAttribute("subjects", subjects);
-            req.getRequestDispatcher("subject_list.jsp").forward(req, resp);
+            req.setAttribute("error", null);
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
+        } finally {
+            req.getRequestDispatcher("subject_list.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            req.setAttribute("error", null);
             new SubjectDao().deleteById(Long.valueOf(req.getParameter("del_id")));
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         doGet(req, resp);
     }

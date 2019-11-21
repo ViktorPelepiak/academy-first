@@ -63,11 +63,13 @@ public class FindForTeacherServlet extends HttpServlet {
             req.setAttribute("tomorrow", tomorrow);
             req.setAttribute("I_week", I_week);
             req.setAttribute("II_week", II_week);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher.jsp");
-            requestDispatcher.forward(req, resp);
+            req.setAttribute("error", null);
         } catch (SQLException | ParseException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
+        }finally {
+            req.getRequestDispatcher("teacher.jsp").forward(req, resp);
         }
     }
 

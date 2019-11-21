@@ -2,6 +2,9 @@ package servlet.teacher;
 
 import dao.TeacherDao;
 import model.Teacher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import servlet.FindForGroupsServlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +18,9 @@ import java.time.LocalDate;
 
 @WebServlet(urlPatterns = "/teacher_change")
 public class TeacherAddOrEditItem extends HttpServlet {
+
+    private static final Logger LOGGER = LogManager.getLogger(FindForGroupsServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id") == null) {
@@ -37,13 +43,15 @@ public class TeacherAddOrEditItem extends HttpServlet {
                 req.setAttribute("dob", t.getDateOfBirth());
                 req.setAttribute("info", t.getInfo());
 
+                req.setAttribute("error", null);
             } catch (SQLException e) {
-                e.printStackTrace();
+                req.setAttribute("error", e.getMessage());
+                LOGGER.error(e);
+//                e.printStackTrace();
             }
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("teacher_edit.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("teacher_edit.jsp").forward(req, resp);
 
     }
 
@@ -63,9 +71,12 @@ public class TeacherAddOrEditItem extends HttpServlet {
                 t.setId(Long.valueOf(req.getParameter("id")));
                 td.update(t);
             }
-            new servlet.teacher.TeacherCrudServlet().doGet(req, resp);
+            req.setAttribute("error", null);
         } catch (SQLException e) {
-            e.printStackTrace();
+            req.setAttribute("error", e.getMessage());
+            LOGGER.error(e);
+//            e.printStackTrace();
         }
+        new servlet.teacher.TeacherCrudServlet().doGet(req, resp);
     }
 }

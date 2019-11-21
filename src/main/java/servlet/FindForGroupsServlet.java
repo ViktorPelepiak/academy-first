@@ -62,11 +62,13 @@ public class FindForGroupsServlet extends HttpServlet {
             req.setAttribute("tomorrow", tomorrow);
             req.setAttribute("I_week", I_week);
             req.setAttribute("II_week", II_week);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("group.jsp");
-            requestDispatcher.forward(req, resp);
+            req.setAttribute("error", null);
         } catch (SQLException | ParseException e) {
             LOGGER.error(e);
-            e.printStackTrace();
+            req.setAttribute("error", e.getMessage());
+//            e.printStackTrace();
+        } finally {
+            req.getRequestDispatcher("group.jsp").forward(req, resp);
         }
     }
 

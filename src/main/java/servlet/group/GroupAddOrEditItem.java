@@ -38,14 +38,14 @@ public class GroupAddOrEditItem extends HttpServlet {
                 req.setAttribute("spec", g.getSpecialisation());
                 req.setAttribute("num", g.getGroupNumber());
                 req.setAttribute("course", g.getCourse());
+                req.setAttribute("error", null);
             } catch (SQLException e) {
+                req.setAttribute("error", e.getMessage());
                 LOGGER.error(e);
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
-
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("group_edit.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("group_edit.jsp").forward(req, resp);
 
     }
 
@@ -66,8 +66,9 @@ public class GroupAddOrEditItem extends HttpServlet {
             }
             new GroupCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

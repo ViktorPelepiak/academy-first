@@ -36,14 +36,15 @@ public class AuditoryAddOrEditItem extends HttpServlet {
                 req.setAttribute("building", a.getBuildingNumber());
                 req.setAttribute("floor", a.getFloor());
                 req.setAttribute("aud", a.getAuditoryNumber());
+                req.setAttribute("error", null);
             } catch (SQLException e) {
+                req.setAttribute("error", e.getMessage());
                 LOGGER.error(e);
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("auditory_edit.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("auditory_edit.jsp").forward(req, resp);
 
     }
 
@@ -63,8 +64,9 @@ public class AuditoryAddOrEditItem extends HttpServlet {
             }
             new AuditoryCrudServlet().doGet(req, resp);
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

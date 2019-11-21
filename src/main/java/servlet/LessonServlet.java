@@ -29,11 +29,11 @@ public class LessonServlet extends HttpServlet {
             req.setAttribute("teachers", new TeacherDao().getAll());
             req.setAttribute("auditories", new AuditoryDao().getAll());
             req.setAttribute("subjects", new SubjectDao().getAll());
+            req.setAttribute("error", null);
         } catch (SQLException e) {
             LOGGER.error(e);
             req.setAttribute("error", e.getMessage());
 //            e.printStackTrace();
-            throw new RuntimeException();
         }
         req.getRequestDispatcher("add_lesson.jsp").forward(req, resp);
     }
@@ -51,6 +51,7 @@ public class LessonServlet extends HttpServlet {
                     .setDayOfWeek(DayOfWeek.values()[Integer.parseInt(req.getParameter("day"))])
                     .setSubject(new Subject().setId(Long.valueOf(req.getParameter("subject"))))
             );
+            req.setAttribute("error", null);
         } catch (SQLException e) {
             req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
