@@ -25,14 +25,13 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="js/functions.js"></script>
 </head>
-<body style="width: 100%; align-content: center; background: lavender">
+<body style="width: 100%; align-content: center; background: lavender" onload="function errorAlert() { if (${error != null}) {alert(${error})}}">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="index.jsp">ViPSchedule</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
@@ -55,7 +54,8 @@
         <div class="col-sm-10">
             <select class="form-control form-control-lg" name="lessonTime" id="lessonTime">
                 <c:forEach var="lessonT" items="${lessonTime}">
-                    <option value="${lessonT.lessonNumber}"> ${lessonT.lessonNumber} | ${lessonT.beginTime} | ${lessonT.endTime}</option>
+                    <option value="${lessonT.lessonNumber}"> ${lessonT.lessonNumber} | ${lessonT.beginTime}
+                        | ${lessonT.endTime}</option>
                 </c:forEach>
             </select>
         </div>
@@ -66,7 +66,8 @@
         <div class="col-sm-10">
             <select class="form-control form-control-lg" name="group" id="group">
                 <c:forEach var="group" items="${groups}">
-                    <option value="${group.id}"> ${group.faculty} | ${group.specialisation} | ${group.groupNumber}</option>
+                    <option value="${group.id}"> ${group.faculty} | ${group.specialisation}
+                        | ${group.groupNumber}</option>
                 </c:forEach>
             </select>
         </div>
@@ -88,7 +89,8 @@
         <div class="col-sm-10">
             <select class="form-control form-control-lg" name="teacher" id="teacher">
                 <c:forEach var="teacher" items="${teachers}">
-                    <option value="${teacher.id}">${teacher.firstName} | ${teacher.fatherName} | ${teacher.lastName}</option>
+                    <option value="${teacher.id}">${teacher.firstName} | ${teacher.fatherName}
+                        | ${teacher.lastName}</option>
                 </c:forEach>
             </select>
         </div>
@@ -136,21 +138,22 @@
                 <c:forEach var="subject" items="${subjects}">
                 <option value="${subject.id}">${subject.name}</option>
                 </c:forEach>
+            </select>
         </div>
     </div>
-
-    <br>
 
     <div class="form-group row">
         <div class="col-sm-4" style="align-self: auto">
-            <input value="Add lesson" class="btn btn-success" type="submit" name="submit" id="submit" style="width: 25%">
+            <input type="submit" class="btn btn-success" value="Add lesson">
+            <%--            <button type="button" class="btn btn-success" onclick="createLesson()" name="submit" id="submit" style="width: 100%;">Add--%>
+<%--                lesson--%>
+<%--            </button>--%>
         </div>
 
         <div class="col-sm-4" style="align-self: auto">
-            <input value="Cancel" class="btn btn-secondary" type="reset" name="cancel" id="cancel" style="width: 25%" onclick="index.jsp">
+            <input value="Cancel" class="btn btn-secondary" type="reset" name="cancel" id="cancel" style="width: 100%">
         </div>
     </div>
-
 
 
 </form>

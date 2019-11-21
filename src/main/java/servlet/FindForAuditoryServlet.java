@@ -34,12 +34,6 @@ public class FindForAuditoryServlet extends HttpServlet {
 
         int auditoryId;
 
-        if (req.getParameter("auditoryId") == null) {
-            auditoryId = 1;
-        } else {
-            auditoryId = Integer.parseInt(req.getParameter("auditoryId"));
-        }
-
         List<Auditory> auditories;
         List<LessonDto> today;
         List<LessonDto> tomorrow;
@@ -48,6 +42,12 @@ public class FindForAuditoryServlet extends HttpServlet {
         try {
             auditories = ad.getAll();
             LocalDate now = LocalDate.now();
+
+            if (req.getParameter("auditoryId") == null) {
+                auditoryId = Math.toIntExact(auditories.get(0).getId());
+            } else {
+                auditoryId = Integer.parseInt(req.getParameter("auditoryId"));
+            }
 
             I_week = ld.getAllForAuditory(auditoryId, WeekParity.UNPAIR_WEEK);
             II_week = ld.getAllForAuditory(auditoryId, WeekParity.PAIR_WEEK);

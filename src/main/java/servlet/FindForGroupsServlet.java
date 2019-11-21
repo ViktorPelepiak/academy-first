@@ -51,7 +51,6 @@ public class FindForGroupsServlet extends HttpServlet {
 
             I_week = ld.getAllForGroup(groupId, WeekParity.UNPAIR_WEEK);
             II_week = ld.getAllForGroup(groupId, WeekParity.PAIR_WEEK);
-
             today = Methods.selectTodayLessons(I_week, II_week);
             tomorrow = Methods.selectTomorrowLessons(I_week, II_week);
 

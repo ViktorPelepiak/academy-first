@@ -159,7 +159,6 @@ public class LessonDao implements Dao<Lesson> {
 
     @Override
     public Lesson save(Lesson lesson) throws SQLException {
-        try {
             Connection connection = DBConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(SAVE, Statement.RETURN_GENERATED_KEYS);
 
@@ -179,9 +178,6 @@ public class LessonDao implements Dao<Lesson> {
             }
             statement.close();
             connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return lesson;
     }
 

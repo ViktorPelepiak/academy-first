@@ -30,12 +30,12 @@ public class LessonServlet extends HttpServlet {
             req.setAttribute("auditories", new AuditoryDao().getAll());
             req.setAttribute("subjects", new SubjectDao().getAll());
         } catch (SQLException e) {
-            e.printStackTrace();
             LOGGER.error(e);
+            req.setAttribute("error", e.getMessage());
+//            e.printStackTrace();
+            throw new RuntimeException();
         }
-
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("add_lesson.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("add_lesson.jsp").forward(req, resp);
     }
 
     @Override
@@ -51,10 +51,13 @@ public class LessonServlet extends HttpServlet {
                     .setDayOfWeek(DayOfWeek.values()[Integer.parseInt(req.getParameter("day"))])
                     .setSubject(new Subject().setId(Long.valueOf(req.getParameter("subject"))))
             );
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         } catch (SQLException e) {
+            req.setAttribute("error", e.getMessage());
             LOGGER.error(e);
-            e.printStackTrace();
+//            e.printStackTrace();
+        }
+        finally {
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 }

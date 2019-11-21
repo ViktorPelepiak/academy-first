@@ -33,12 +33,6 @@ public class FindForTeacherServlet extends HttpServlet {
 
         int teacherId;
 
-        if (req.getParameter("teacherId") == null) {
-            teacherId = 1;
-        } else {
-            teacherId = Integer.parseInt(req.getParameter("teacherId"));
-        }
-
         List<Teacher> teachers;
         List<LessonDto> today;
         List<LessonDto> tomorrow;
@@ -49,6 +43,12 @@ public class FindForTeacherServlet extends HttpServlet {
 
             LocalDate date;
             LocalDate now = LocalDate.now();
+
+            if (req.getParameter("teacherId") == null) {
+                teacherId = Math.toIntExact(teachers.get(0).getId());
+            } else {
+                teacherId = Integer.parseInt(req.getParameter("teacherId"));
+            }
 
             I_week = ld.getAllForTeacher(teacherId, WeekParity.UNPAIR_WEEK);
             II_week = ld.getAllForTeacher(teacherId, WeekParity.PAIR_WEEK);
